@@ -37,3 +37,31 @@ head(head(head(tail(tail(lst)))));
 //list(list(7), list(6, 5, 4), list(3, 2), 1);
 //list(7, list(6), list(5, list(4)), list(3, list(2, list(1))));
 //list(7, list(list(6, 5), list(4), 3, 2), list(list(1)));
+
+// IN CLASS
+function every_second(xs) {
+    const len = length(xs);
+    return len === 0 || len === 1
+           ? null
+           : pair(list_ref(xs, 1), every_second(tail(tail(xs))));
+}
+
+//every_second(list("a", "x", "b", "y", "c", "z", "d"));
+//list_ref(list(1, 2, 3), 2);
+
+function sum(items) {
+    return length(items) === 0 ? 0 : head(items) + sum(tail(items));
+}
+
+function sums(items) {
+    return list(sum(every_second(pair(0, items))), sum(every_second(items)));
+}
+
+function sums_accumulate(items) {
+    return list(
+            accumulate((x, y) => x + y, 0, every_second(pair(0, items))), 
+            accumulate((x, y) => x + y, 0, every_second(items))
+        );
+}
+
+sums(list(1, 2, 3, 4, 5));
