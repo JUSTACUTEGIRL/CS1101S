@@ -7,24 +7,17 @@ function my_map(f, xs) {
 
 //2
 function remove_duplicates(lst) {
-    const is_in_list = (x, xs) => is_null(xs)
-                                  ? false
-                                  : head(xs) === x
-                                  ? true
-                                  : is_in_list(x, tail(xs));
-                                  
     function remove_duplicates_list(lst, xs) {
         return is_null(lst)
                ? xs
-               : is_in_list(head(lst), xs)
-               ? remove_duplicates_list(filter(x => x !== head(lst), lst), xs)
                : remove_duplicates_list(filter(x => x !== head(lst), lst), append(xs, list(head(lst))));
     }
     
     return remove_duplicates_list(lst, null);
 }
 
-//display_list(remove_duplicates(list(1, 1, 2, 2, 3, 5, 6, 4, 2, 7)));
+display_list(remove_duplicates(list(1, 1, 2, 2, 3, 5, 6, 4, 2, 7)));
+display_list(remove_duplicates(list(1, 2, 3, 4, 4, 3, 2, 1, 2)));
 
 //3
 function makeup_amount(x, coins) {
@@ -50,7 +43,7 @@ function makeup_amount(x, coins) {
     }
 }
 
-display_list(makeup_amount(22, list(1, 10, 5, 20, 1, 5, 1, 50)));
+//display_list(makeup_amount(22, list(1, 10, 5, 20, 1, 5, 1, 50)));
 
 //const lst = list(list(5), list(10));
 //display_list(append(list(5), list(10)));
