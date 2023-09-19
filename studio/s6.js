@@ -7,13 +7,9 @@ function my_map(f, xs) {
 
 //2
 function remove_duplicates(lst) {
-    function remove_duplicates_list(lst, xs) {
-        return is_null(lst)
-               ? xs
-               : remove_duplicates_list(filter(x => x !== head(lst), lst), append(xs, list(head(lst))));
-    }
-    
-    return remove_duplicates_list(lst, null);
+    return is_null(lst)
+           ? null
+           : pair(head(lst), remove_duplicates(filter(x => !equal(x, head(lst)), lst)));
 }
 
 display_list(remove_duplicates(list(1, 1, 2, 2, 3, 5, 6, 4, 2, 7)));
@@ -36,8 +32,8 @@ function makeup_amount(x, coins) {
         
         // Combinations that use the head coin.
         const combi_C = is_null(makeup_amount(x - head(coins), tail(coins))) 
-                            ? null 
-                            : map(x => append(list(head(coins)), x), makeup_amount(x - head(coins), tail(coins)));
+                        ? null 
+                        : map(x => append(list(head(coins)), x), makeup_amount(x - head(coins), tail(coins)));
                         
         return append(combi_A, combi_C);
     }
