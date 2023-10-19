@@ -46,7 +46,7 @@ function binary_search(A, x) {
         const mid = math_floor((low + high) / 2);
         if (A[mid] === x) {
             return true;
-        } else if (mid < x) {
+        } else if (A[mid] < x) {
             low = mid + 1;
         } else {
             high = mid - 1;
