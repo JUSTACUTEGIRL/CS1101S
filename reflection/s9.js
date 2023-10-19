@@ -95,3 +95,78 @@ function fib_2e(x) {
         return num;
     }
 }
+
+/*
+3.
+mchoose(7, 4)
+    mchoose(6, 3)
+        mchoose(5, 3); mchoose(5, 2)
+            mchoose(4, 2); mchoose(4, 1)
+                mchoose(3, 1); mchoose(3, 0) = 1
+
+
+mchoose(6, 4)
+    mchoose(5, 3)
+        mchoose(4, 3); mchoose(4, 2)
+            mchoose(3, 2); mchoose(3, 1)
+                mchoose(2, 1); mchoose(2, 0) = 1
+    
+    
+    
+
+mchoose(5, 4)
+    mchoose(4, 3)
+        mchoose(3, 3) = 1; mchoose(3, 2)
+            mchoose(2, 2) = 1; mchoose(2, 1)
+                mchoose(1, 1) = 1; mchoose(1, 0) = 1
+
+mchoose(4, 4) = 1; 
+
+Space theta(nk)
+Time theta((nk)
+*/
+
+let total = 365;
+let product = 1;
+
+for (let i = 0; i < 23; i = i + 1) {
+    product = product * total;
+    total = total - 1;
+}
+
+product / math_pow(365, 23);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
