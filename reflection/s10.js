@@ -11,14 +11,15 @@ b. Yes.
 // 2
 function zip_stream(xs) {
     const len = length(xs);
-    let i = 0;
     
-    function zip(xs, n) {
-        let current_stream = list_ref(xs, i % len);
-        const temp = head(current_stream);
-        current_stream = stream_tail(current_stream);
-        i = i + 1;
-        return pair(temp, () => zip(xs, n + 1));
+    function zip(xs, i) {
+        if (i % len === 0 && i !== 0) {
+            display("lol");
+            xs = map(x => stream_tail(x), xs);
+        }
+        
+        const current_stream = list_ref(xs, i % len);
+        return pair(head(current_stream), () => zip(xs, i + 1));
     }
     
     return zip(xs, 0);
@@ -28,13 +29,13 @@ function number_stream(num) {
    return pair(num, () => number_stream(num));
 }
 
-const ones = number_stream(1);
-const twos = number_stream(2);
-const threes = number_stream(3);
+const ones = build_stream(x => x, 100);
+const twos = build_stream(x => 11 * x, 100);
+const threes = build_stream(x => 5 * x, 100);
 const fours = number_stream(4);
-const fives = number_stream(5);
+const fives = number_stream(55);
 
-eval_stream(zip_stream(list(ones, twos, threes, fours, fives)), 10);
+eval_stream(zip_stream(list(ones, twos, threes)), 10);
 
 // 3
 function add_streams(s1, s2) {
@@ -60,4 +61,4 @@ function partial_sum(s) {
     return partial(s, og);
 }
 
-eval_stream(partial_sum(null), 100);
+//eval_stream(partial_sum(null), 100);
