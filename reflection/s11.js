@@ -616,7 +616,8 @@ const primitive_functions = list(
        list("is_null", is_null          ),
        list("display", display          ),
        list("error",   error            ),
-       list("math_pow",math_pow         )
+       list("math_pow",math_pow         ),
+       list("parse",   parse            )
        );
 const primitive_function_symbols =
     map(head, primitive_functions);
@@ -764,4 +765,5 @@ factorial(5) + n;`);
 // parse_and_evaluate("3 % 4 % 5;");
 // Three numbers works
 
-parse_and_evaluate("(false && 0()) && 0();");
+
+display_list(parse_and_evaluate(`parse('parse("1;");');`));
