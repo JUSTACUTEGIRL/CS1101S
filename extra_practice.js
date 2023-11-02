@@ -82,6 +82,135 @@
 // find_max(a, 7); //returns 5, until index 7, the biggest element is 14, in index 5
 // find_max(a, 3); // returns 3, until index 3, the biggest element is 6, in index 3
 
+// function flip(n, a) {
+//     if (n > array_length(a) - 1) {
+//         return "index out of range";
+//     } else if (array_length(a) === 0) {
+//         return [];
+//     }
+    
+//     const mid = math_floor(n / 2);
+//     for (let i = 0; i <= mid; i = i + 1) {
+//         const temp = a[i];
+//         a[i] = a[n - i];
+//         a[n - i] = temp;
+//     }
+    
+//     return a;
+// }
+
+// function sort(a) {
+//     for (let i = array_length(a) - 1; i > 0; i = i - 1) {
+//         let largest = a[i];
+//         let index = i;
+        
+//         for (let j = 0; j <= i; j = j + 1) {
+//             if (largest < a[j]) {
+//                 index = j;
+//                 largest = a[j];
+//             }
+//         }
+        
+//         if (index === i) {
+//             continue;
+//         } else {
+//             flip(index, a);
+//             flip(i, a);
+//         }
+//     }
+    
+//     return a;
+// }
+
+// function flip_count(a) {
+//     let count = 0;
+    
+//     for (let i = array_length(a) - 1; i > 0; i = i - 1) {
+//         let largest = a[i];
+//         let index = i;
+        
+//         display(a);
+//         for (let j = 0; j <= i; j = j + 1) {
+//             if (largest < a[j]) {
+//                 index = j;
+//                 largest = a[j];
+//             }
+//         }
+        
+//         if (index === i) {
+//             continue;
+//         } else if (index === 0) {
+//             count = count + 1;
+//             flip(i, a);
+//         } else {
+//             count = count + 2;
+//             flip(index, a);
+//             flip(i, a);
+//         }
+//     }
+    
+//     return count;
+// }
+
+// function alternate_sum(a) {
+//     if (is_null(a)) {
+//         return null;
+//     } else {
+//         const e = head(a) % 2;
+//         return pair(accumulate((x, y) => x % 2 === e ? x + y : y, 0, a), alternate_sum(tail(a)));
+//     }
+// }
+
+// const a = list(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+// alternate_sum(a); // return list(25, 30, 24, 28, 21, 24, 16, 18, 9, 10);
+
+function same_sum(size) {
+    if (size % 2 === 0) {
+        return "size must be odd";
+    } else if (size <= 0) {
+        return "invalid n";
+    } else {
+        let row = 0;
+        let column = math_floor(size / 2);
+        
+        const m = [];
+        for (let i = 0; i < size; i = i + 1) {
+            m[i] = [];
+        }
+        
+        let i = 1;
+        while (i <= size * size) {
+            if (m[row][column] === undefined) {
+                m[row][column] = i;
+                row = row - 1;
+                column = column + 1;
+                i = i + 1;
+            } else {
+                row = row + 2;
+                column = column - 1;
+            }
+            
+            if (row < 0) {
+                row = size + row;
+            } else if (row > size - 1) {
+                row = 0 + row - size;
+            }
+            
+            if (column > size - 1) {
+                column = 0 + column - size;
+            } else if (column < 0) {
+                column = size + column;
+            }
+        }
+        
+        return m;
+    }
+}
+
+same_sum(5);
+
+
+
 
 
 
