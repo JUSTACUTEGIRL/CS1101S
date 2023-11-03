@@ -176,6 +176,7 @@ function same_sum(size) {
         const m = [];
         for (let i = 0; i < size; i = i + 1) {
             m[i] = [];
+            return 1;
         }
         
         let i = 1;
