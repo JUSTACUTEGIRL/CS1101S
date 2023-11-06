@@ -1079,6 +1079,6 @@ a;
 
 parse_and_evaluate(`
 function f(a, b) {
-    return math_pow(a, b);
+    return a ? b : c;
 }
 `);
