@@ -261,42 +261,34 @@ function evaluate(program) {
 // (SICP JS 4.1.1)
 
 function scan_out_declarations(component) {
-    function all_declaration(component) {
+    function og_implementation(component) {
         return is_sequence(component)
            ? accumulate(append,
                         null,
-                        map(all_declaration,
+                        map(scan_out_declarations,
                             sequence_statements(component)))
            : is_declaration(component)
            ? list(declaration_symbol(component))
            : null;
     }
     
-    const all = all_declaration(component);
-    
-    
-    function find_invalid_names(component) {
-        display_list(component);
+    function find_invalid_names(component, xs) {
+        const all = append(og_implementation(component), xs);
+        
         if (is_sequence(component)) {
-            return accumulate(append,
-                        null,
-                        map(find_invalid_names,
-                            sequence_statements(component)));
-        } else if (is_declaration(component)) {
-            if (is_function_declaration(component)) {
-                find_invalid_names(list_ref(component, 3));
-            }
-            return list(declaration_symbol(component));
-        } else if (is_application(component)) {
-            find_invalid_names(list_ref(component, 1));
-            map(find_invalid_names, list_ref(component, 2));
-        } else if (is_conditional(component)) {
-            find_invalid_names(conditional_consequent(component));
-            find_invalid_names(conditional_alternative(component));
+            return accumulate(append, null, map(x => find_invalid_names(x, all), sequence_statements(component)));
         } else if (is_block(component)) {
-            find_invalid_names(block_body(component));
+            find_invalid_names(block_body(component), all);
+        } else if (is_application(component)) {
+            find_invalid_names(list_ref(component, 1), all);
+            map(x => find_invalid_names(x, all), list_ref(component, 2));
+        } else if (is_conditional(component)) {
+            find_invalid_names(conditional_consequent(component), all);
+            find_invalid_names(conditional_alternative(component), all);
+        } else if (is_function_declaration(component)) {
+            find_invalid_names(list_ref(component, 3), append(all, map(symbol_of_name, list_ref(component, 2))));
         } else if (is_return_statement(component)) {
-            find_invalid_names(return_expression(component));
+            find_invalid_names(return_expression(component), all);
         } else if (is_name(component)) {
             return is_null(member(symbol_of_name(component), all)) && is_null(member(symbol_of_name(component), primitive_function_symbols)) ? error(literal_value(component), "dumb dumb never declare this la") : null;
         } else {
@@ -304,9 +296,9 @@ function scan_out_declarations(component) {
         }
     }
     
-    find_invalid_names(component);
+    find_invalid_names(component, null);
     
-    return all;
+    return og_implementation(component);
 }
 
 function list_of_unassigned(symbols) {
@@ -1086,5 +1078,7 @@ a;
 */
 
 parse_and_evaluate(`
-false ? math_pow(6, bruh) : 8;
+function f(a, b) {
+    return math_pow(a, b);
+}
 `);
